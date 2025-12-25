@@ -691,7 +691,7 @@ jobs:
             const { basename } = require('path');
             const { createHash } = require('crypto');
             const { readFileSync,writeFileSync } = require('fs');
-            const globber = await glob.create([`artifacts/mpv*.zip`,`artifacts/ffmpeg*.zip`].join('\n'));
+            const globber = await glob.create([`artifacts/mpv*.zip`].join('\n'));
             const files = await globber.glob();
             if ( files.length > 0 ) {
               let sha256="";
@@ -706,7 +706,7 @@ jobs:
       - name: Create release
         uses: ncipollo/release-action@v1
         with:
-          artifacts: "artifacts/mpv*.zip,artifacts/ffmpeg*.zip,sha256.txt"
+          artifacts: "artifacts/mpv*.zip,sha256.txt"
           commit: version
           name: "${{ env.long_time }}"
           body: "${{ steps.note.outputs.note }}"

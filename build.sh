@@ -96,7 +96,7 @@ zip() {
     cd $gitdir/release
     for dir in ./mpv*$arch$x86_64_level*; do
         if [ -d $dir ]; then
-            7z a -m0=lzma2 -mx=9 -ms=on $dir.zip $dir/* -x!*.zip
+            7z a -m0=lzma2 -mx=9 -ms=on $dir.7z $dir/* -x!*.7z
             rm -rf $dir
         fi
     done
@@ -105,17 +105,17 @@ zip() {
 
 download_mpv_package() {
     local package_url="https://codeload.github.com/zhongfly/mpv-packaging/zip/master"
-    if [ -e mpv-packaging.zip ]; then
+    if [ -e mpv-packaging.7z ]; then
         echo "Package exists. Check if it is newer.."
         remote_commit=$(git ls-remote https://github.com/zhongfly/mpv-packaging.git master | awk '{print $1;}')
-        local_commit=$(unzip -z mpv-packaging.zip | tail +2)
+        local_commit=$(unzip -z mpv-packaging.7z | tail +2)
         if [ "$remote_commit" != "$local_commit" ]; then
-            wget -qO mpv-packaging.zip $package_url
+            wget -qO mpv-packaging.7z $package_url
         fi
     else
-        wget -qO mpv-packaging.zip $package_url
+        wget -qO mpv-packaging.7z $package_url
     fi
-    unzip -o mpv-packaging.zip
+    unzip -o mpv-packaging.7z
 }
 
 prepare() {
